@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Http\Models\User;
+use App\Http\Models\Todo;
+use Illuminate\Support\Facades\Hash;
+
+class TodoRequest extends ApiRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        if ($this->method() = Request::METHOD_POST)
+            return true;
+        $todo = $this->route('todo');
+        return auth()->user()->id = $todo->user_id;    
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'todo' => 'required|string|max:255',
+            'label' => 'nullable|string',
+            'done' => 'nullable|boolean',
+        ];
+    }
+}
